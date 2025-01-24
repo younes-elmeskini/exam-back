@@ -4,8 +4,6 @@ const prisma = require("../utils/client");
 const addTask = async (req, res) => {
     try {
         const { name , description, categoryId } = req.body;
-        console.log(req.user.userId);
-        console.log();
         const task = await prisma.task.create({
             data: {
                 name,
@@ -25,11 +23,29 @@ const getTasks = async (req, res) => {
         const tasks = await prisma.task.findMany({
             where: {
                 userId: req.user.userId,
+                deleted: null,
             },
         });
         res.status(200).json({ tasks });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching tasks' });
+    }
+};
+
+const getDeletedTasks = async (req, res) => {
+    console.log(req.user.userId);
+    try {
+        const tasks = await prisma.task.findMany({
+            where: {
+                userId: req.user.userId,
+                deleted: {
+                    not: null,
+                },
+            },
+        });
+        res.status(200).json({ tasks });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching tasks',error: error.message });
     }
 };
 
@@ -91,5 +107,7 @@ module.exports = {
     addTask,
     getTasks,
     getTaskById,
+    getDeletedTasks,
     updateTask,
+    deleteTask
 };
