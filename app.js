@@ -38,6 +38,8 @@ app.use(cookieParser());
 // routes
 app.use("/category", require('./routes/categoryRoute'))
 
+app.use("/task", require('./routes/taskRoute'))
+
 app.use("/user", require('./routes/courseRoute'))
 
 
