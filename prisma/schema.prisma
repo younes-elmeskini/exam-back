@@ -32,6 +32,9 @@ model task {
   name     String
   description String?
   completed  Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   DateTime?
   userId    Int
   user   user @relation(fields: [userId], references: [id])
   categoryId  Int
