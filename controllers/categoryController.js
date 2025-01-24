@@ -91,59 +91,6 @@ const deleteCategory = async (req, res) => {
   }
 };
 
-const addSubcategory = async (req, res) => {
-  try {
-      const categoryId = parseInt(req.params.id); // ID de la catégorie parente
-      const { name, description } = req.body;
-
-      // Vérifier si la catégorie parente existe
-      const category = await prisma.categories.findUnique({
-          where: { id: categoryId },
-      });
-
-      if (!category) {
-          return res.status(404).json({ message: 'Category not found' });
-      }
-
-      // Créer la sous-catégorie
-      const subcategory = await prisma.subcategories.create({
-          data: {
-              name,
-              description,
-              categoryId: categoryId,
-          },
-      });
-      res.status(201).json({ message: 'Subcategory added successfully', data: subcategory });
-  } catch (error) {
-      res.status(500).json({ message: 'Error adding subcategory', error: error.message });
-  }
-};
-
-
-const getSubcategories = async (req, res) => {
-  try {
-      const categoryId = parseInt(req.params.id); // ID de la catégorie parente
-
-      // Vérifier si la catégorie parente existe
-      const category = await prisma.categories.findUnique({
-          where: { id: categoryId },
-      });
-
-      if (!category) {
-          return res.status(404).json({ message: 'Category not found' });
-      }
-
-      // Récupérer les sous-catégories de la catégorie parente
-      const subcategories = await prisma.subcategories.findMany({
-          where: { categoryId: categoryId },
-      });
-
-      res.status(200).json({ subcategories });
-  } catch (error) {
-      res.status(500).json({ message: 'Error fetching subcategories', error: error.message });
-  }
-};
-
 
 
 module.exports = {
@@ -152,6 +99,5 @@ module.exports = {
     getCategoryById,
     updateCategory,
     deleteCategory,
-    addSubcategory,
-    getSubcategories 
+
 }
