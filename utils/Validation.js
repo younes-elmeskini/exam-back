@@ -25,16 +25,7 @@ const validation ={
 }
 
 
-const checkLogin = (req, res, next) => {
-    const token = req.cookies.token;
-    if (token) {
-      return res.status(401).json({ message: 'Vous êtes déjà connecté' });
-    }
-    next();
-  };
-
 module.exports = {
     validation,
-    validationandHandlerrors,
-    checkLogin
+    validationandHandlerrors
 };
