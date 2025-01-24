@@ -15,12 +15,16 @@ const addCategory = async (req, res) => {
 };
 
 const getCategories = async (req, res) => {
-    try {
-    const categories = await prisma.categories.findMany();
-    res.status(200).json({ categories });
-    } catch (error) {
-    res.status(500).json({ message: 'Error fetching categories' });
-    }
+      try {
+          const categories = await prisma.categories.findMany({
+              where: {
+                  deleted: false,
+              },
+          });
+          res.status(200).json({ categories });
+      } catch (error) {
+          res.status(500).json({ message: 'Error fetching categories' });
+      }
 };
 
 const getCategoryById = async (req, res) => {
@@ -70,9 +74,14 @@ const deleteCategory = async (req, res) => {
           return res.status(404).json({ message: 'Category not found' });
       }
 
-      await prisma.categories.delete({
-          where: { id: id },
-      });
+      await prisma.user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          deleted: new Date(),
+        }
+        });
 
       res.status(200).json({ message: 'Category deleted successfully' });
   } catch (error) {

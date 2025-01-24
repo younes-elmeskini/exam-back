@@ -41,5 +41,8 @@ model task {
 model categories {
   id        Int     @id @default(autoincrement())
   name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   DateTime?
   tasks     task[]
 }
