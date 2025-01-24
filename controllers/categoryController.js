@@ -58,7 +58,7 @@ const getDeletedCaretegories = async (req, res) => {
     }
   };
 
-  
+
 const updateCategory = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
@@ -89,7 +89,7 @@ const deleteCategory = async (req, res) => {
           return res.status(404).json({ message: 'Category not found' });
       }
 
-      await prisma.user.update({
+      await prisma.categories.update({
         where: {
           id: id,
         },
@@ -109,6 +109,7 @@ const deleteCategory = async (req, res) => {
 module.exports = {
     addCategory,
     getCategories,
+    getDeletedCaretegories,
     getCategoryById,
     updateCategory,
     deleteCategory,
