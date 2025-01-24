@@ -45,19 +45,20 @@ const getCategoryById = async (req, res) => {
 };
 const getDeletedCaretegories = async (req, res) => {
     try {
-      const users = await prisma.categories.findMany({
+      const categories = await prisma.categories.findMany({
         where: {
           deleted: {
             not: null,
           },
         },
       });
-      res.status(200).json({ users });
+      res.status(200).json({ categories });
     } catch (error) {
       res.status(500).json({ message: 'Error fetching users' });
     }
   };
 
+  
 const updateCategory = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
