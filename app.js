@@ -36,7 +36,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 // routes
-// app.use("/user", require('./routes/userroute'))
+app.use("/category", require('./routes/categoryRoute'))
 
 app.use("/user", require('./routes/courseRoute'))
 

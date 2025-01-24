@@ -2,11 +2,10 @@ const prisma = require("../utils/client");
 
 const addCategory = async (req, res) => {
     try {
-      const { name, description ,image} = req.body;
+      const { name} = req.body;
       const category = await prisma.categories.create({
         data: {
           name,
-          description,
         },
       });
       res.status(201).json({ message: 'Category added successfully', data: category });
