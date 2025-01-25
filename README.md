@@ -19,7 +19,7 @@ delete:
 http://localhost:4000/category/:id 
 
 task 
-post:
+post: 
 http://localhost:4000/tasky/add
 get:
 http://localhost:4000/task/
