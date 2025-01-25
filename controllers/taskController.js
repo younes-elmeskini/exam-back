@@ -94,10 +94,31 @@ const deleteTask = async (req, res) => {
               id: id,
             },
             data: {
-              deleted: new Date(),
+              deleted: true,
+            }
+            }); 
+        res.status(200).json({ message: 'Task deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Erreur serveur',error:err.message });
+    }
+};
+
+const restoreTask = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const task = await prisma.task.findUnique({ where: { id } });
+        if (!task) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+        await prisma.task.update({
+            where: {
+              id: id,
+            },
+            data: {
+              deleted: true,
             }
             });
-        res.status(200).json({ message: 'Task deleted successfully' });
+        res.status(200).json({ message: 'Task restored successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Erreur serveur',error:err.message });
     }
