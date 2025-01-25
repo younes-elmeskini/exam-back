@@ -130,5 +130,6 @@ module.exports = {
     getTaskById,
     getDeletedTasks,
     updateTask,
-    deleteTask
+    deleteTask,
+    restoreTask,
 };
