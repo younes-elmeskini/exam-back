@@ -11,6 +11,9 @@ const signup = async (req, res) => {
                 email: email,
             },
         });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
         const hashedPassword = await bcrypt.hash(password, 8);
         const user = await prisma.user.create({
             data: {

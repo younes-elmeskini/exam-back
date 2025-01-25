@@ -10,7 +10,7 @@ router.get("/",isAuthenticated, getTasks)
 router.get("/deleted",isAuthenticated, validationandHandlerrors,getDeletedTasks)
 router.get("/:id",isAuthenticated, validationandHandlerrors,getTaskById)
 router.patch("/:id",isAuthenticated, validationandHandlerrors,updateTask)
-router.patch("/restore/:id",isAuthenticated, validationandHandlerrors,restoreTask)
+router.get("/restore/:id",isAuthenticated, validationandHandlerrors,restoreTask)
 router.delete("/:id",isAuthenticated, validationandHandlerrors,deleteTask)
 
 

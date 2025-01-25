@@ -23,12 +23,12 @@ const getTasks = async (req, res) => {
         const tasks = await prisma.task.findMany({
             where: {
                 userId: req.user.userId,
-                deleted: null,
+                deleted: false,
             },
         });
         res.status(200).json({ tasks });
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching tasks' });
+        res.status(500).json({ message: 'Error fetching tasks' ,error: error.message });
     }
 };
 
@@ -38,12 +38,10 @@ const getDeletedTasks = async (req, res) => {
         const tasks = await prisma.task.findMany({
             where: {
                 userId: req.user.userId,
-                deleted: {
-                    not: null,
-                },
+                deleted: true,
             },
         });
-        res.status(200).json({ tasks });
+        res.status(200).json({ deleted_tasks: tasks });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching tasks',error: error.message });
     }
@@ -115,7 +113,7 @@ const restoreTask = async (req, res) => {
               id: id,
             },
             data: {
-              deleted: true,
+              deleted: false,
             }
             });
         res.status(200).json({ message: 'Task restored successfully' });
