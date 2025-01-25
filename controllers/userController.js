@@ -6,6 +6,11 @@ const {generateToken} = require("../utils/Authentication")
 const signup = async (req, res) => {
     try {
         const {email, password} = req.body;
+        const existingUser = await prisma.user.findUnique({
+            where: {
+                email: email,
+            },
+        });
         const hashedPassword = await bcrypt.hash(password, 8);
         const user = await prisma.user.create({
             data: {
